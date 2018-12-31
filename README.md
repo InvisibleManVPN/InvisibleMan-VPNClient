@@ -1,2 +1,2 @@
-# InvisibleManVPN
+# InvisibleMan
 Free premium PPTP VPN
