@@ -1,0 +1,110 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Invisible_Man.UserControls"
+        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="Invisible_Man.LocationWindow"
+        Title="Invisible Man - Location" Height="450" Width="350" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Icon="IcoInvisibleMan.ico" ShowInTaskbar="False">
+    <Window.Resources>
+        <Storyboard x:Key="AnimStartup">
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="grid">
+    			<EasingDoubleKeyFrame KeyTime="0" Value="-79"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<PowerEase EasingMode="EaseOut"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    		</DoubleAnimationUsingKeyFrames>
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
+    			<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<PowerEase EasingMode="EaseOut"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    		</DoubleAnimationUsingKeyFrames>
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="StackPanelServer">
+    			<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<BackEase EasingMode="EaseOut"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    		</DoubleAnimationUsingKeyFrames>
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="StackPanelServer">
+    			<EasingDoubleKeyFrame KeyTime="0" Value="-50"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="-50"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<BackEase EasingMode="EaseOut"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    		</DoubleAnimationUsingKeyFrames>
+    	</Storyboard>
+    </Window.Resources>
+    <Window.Background>
+        <StaticResource ResourceKey="BackgroundGrayVeryLight"/>
+    </Window.Background>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource AnimStartup}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" RenderTransformOrigin="0.5,0.5">
+        	<ScrollViewer.RenderTransform>
+        		<TransformGroup>
+        			<ScaleTransform/>
+        			<SkewTransform/>
+        			<RotateTransform/>
+        			<TranslateTransform/>
+        		</TransformGroup>
+        	</ScrollViewer.RenderTransform>
+            <StackPanel x:Name="StackPanelServer" Orientation="Vertical" RenderTransformOrigin="0.5,0.5">
+            	<StackPanel.RenderTransform>
+            		<TransformGroup>
+            			<ScaleTransform/>
+            			<SkewTransform/>
+            			<RotateTransform/>
+            			<TranslateTransform/>
+            		</TransformGroup>
+            	</StackPanel.RenderTransform></StackPanel>
+        </ScrollViewer>
+        <Grid x:Name="grid" Grid.Row="0" Background="{StaticResource BackgroundWhite}" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.Effect>
+                <DropShadowEffect Direction="270" Opacity="0.3" ShadowDepth="2"/>
+            </Grid.Effect>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Viewbox Width="60" Height="60" HorizontalAlignment="Right" Grid.Column="0">
+                <Canvas Width="24" Height="24">
+                    <Path Data="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" Fill="{StaticResource BackgroundBlueNormal}" />
+                </Canvas>
+            </Viewbox>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="42"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Padding="0" Margin="10 0 0 0" VerticalAlignment="Bottom" Content="LOCATION" FontFamily="{StaticResource SegoeUI}" FontWeight="Light" FontSize="20" Foreground="Black"/>
+                <Label Grid.Row="1" Padding="0" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Choose a virtual server location" FontFamily="{StaticResource SegoeUI}" FontWeight="Light" FontSize="14" Foreground="Black"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

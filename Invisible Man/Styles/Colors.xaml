@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="GrayVeryLight">#fff4f3ef</Color>
+    <SolidColorBrush x:Key="BackgroundGrayVeryLight" Color="{StaticResource GrayVeryLight}"/>
+    <Color x:Key="GrayLight">#e0dfdf</Color>
+    <SolidColorBrush x:Key="BackgroundGrayLight" Color="{StaticResource GrayLight}"/>
+    <Color x:Key="White">#ffffff</Color>
+    <SolidColorBrush x:Key="BackgroundWhite" Color="{StaticResource White}"/>
+    <Color x:Key="RedNormal">#d95f5f</Color>
+    <SolidColorBrush x:Key="BackgroundRedNormal" Color="{StaticResource RedNormal}"/>
+    <Color x:Key="RedLight">#ec6868</Color>
+    <SolidColorBrush x:Key="BackgroundRedLight" Color="{StaticResource RedLight}"/>
+    <Color x:Key="RedDark">#cb5858</Color>
+    <SolidColorBrush x:Key="BackgroundRedDark" Color="{StaticResource RedDark}"/>
+    <Color x:Key="BlueNormal">#19b3e4</Color>
+    <SolidColorBrush x:Key="BackgroundBlueNormal" Color="{StaticResource BlueNormal}"/>
+    <Color x:Key="BlueDark">#3198c8</Color>
+    <SolidColorBrush x:Key="BackgroundBlueDark" Color="{StaticResource BlueDark}"/>
+    <Color x:Key="GreenNormal">#7bd08a</Color>
+    <SolidColorBrush x:Key="BackgroundGreenNormal" Color="{StaticResource GreenNormal}"/>
+    <Color x:Key="GreenLight">#85de95</Color>
+    <SolidColorBrush x:Key="BackgroundGreenLight" Color="{StaticResource GreenLight}"/>
+    <Color x:Key="GreenDark">#75c683</Color>
+    <SolidColorBrush x:Key="BackgroundGreenDark" Color="{StaticResource GreenDark}"/>
+</ResourceDictionary>
