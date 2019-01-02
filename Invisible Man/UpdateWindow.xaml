@@ -1,0 +1,174 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:Invisible_Man.UserControls"
+        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="Invisible_Man.UpdateWindow"
+        Title="Invisible Man - Update" Height="450" Width="350" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" Icon="IcoInvisibleMan.ico" ShowInTaskbar="False">
+    <Window.Resources>
+        <Storyboard x:Key="AnimStartup">
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="grid">
+    			<EasingDoubleKeyFrame KeyTime="0" Value="-79"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<PowerEase EasingMode="EaseOut"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    		</DoubleAnimationUsingKeyFrames>
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
+    			<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<PowerEase EasingMode="EaseOut"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    		</DoubleAnimationUsingKeyFrames>
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LabelState">
+    			<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<BackEase EasingMode="EaseOut"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    		</DoubleAnimationUsingKeyFrames>
+    		<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="LabelState">
+    			<EasingDoubleKeyFrame KeyTime="0" Value="-50"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-50"/>
+    			<EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="0">
+    				<EasingDoubleKeyFrame.EasingFunction>
+    					<BackEase EasingMode="EaseOut"/>
+    				</EasingDoubleKeyFrame.EasingFunction>
+    			</EasingDoubleKeyFrame>
+    		</DoubleAnimationUsingKeyFrames>
+    	</Storyboard>
+        <Storyboard x:Key="AnimWaiting" RepeatBehavior="Forever">
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="arc">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:1.4" Value="360"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(ed:Arc.EndAngle)" Storyboard.TargetName="arc">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="360"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:1.4" Value="360"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(ed:Arc.StartAngle)" Storyboard.TargetName="arc">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="0"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:1.4" Value="360"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Background>
+        <StaticResource ResourceKey="BackgroundGrayVeryLight"/>
+    </Window.Background>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource AnimStartup}"/>
+            <BeginStoryboard Storyboard="{StaticResource AnimWaiting}"/>
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="170"></RowDefinition>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="GridWaiting" Grid.Row="0" VerticalAlignment="Bottom" Visibility="Visible">
+                <Ellipse x:Name="EllipseWaiting" Width="120" Height="120" Fill="{StaticResource BackgroundGrayLight}"/>
+                <ed:Arc x:Name="arc" ArcThickness="0" ArcThicknessUnit="Pixel" Width="120" Height="120" Stretch="None" Stroke="#FFD95F5F" StrokeThickness="2" StartAngle="0" EndAngle="0" RenderTransformOrigin="0.5,0.5">
+                	<ed:Arc.RenderTransform>
+                		<TransformGroup>
+                			<ScaleTransform/>
+                			<SkewTransform/>
+                			<RotateTransform/>
+                			<TranslateTransform/>
+                		</TransformGroup>
+                	</ed:Arc.RenderTransform>
+                    
+                </ed:Arc>
+                <Viewbox Width="80" Height="80">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M17,13L12,18L7,13H10V9H14V13M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z" Fill="{StaticResource BackgroundRedNormal}" />
+                    </Canvas>
+                </Viewbox>
+            </Grid>
+            <Grid x:Name="GridNew" Grid.Row="0" VerticalAlignment="Bottom" Visibility="Hidden">
+                <Ellipse x:Name="EllipseNew" Width="120" Height="120" Fill="{StaticResource BackgroundGrayLight}"/>
+                <Viewbox Width="80" Height="80">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21M19.75,3.19L18.33,4.61C20.04,6.3 21,8.6 21,11H23C23,8.07 21.84,5.25 19.75,3.19M1,11H3C3,8.6 3.96,6.3 5.67,4.61L4.25,3.19C2.16,5.25 1,8.07 1,11Z" Fill="{StaticResource BackgroundBlueNormal}" />
+                    </Canvas>
+                </Viewbox>
+            </Grid>
+            <Grid x:Name="GridTryAgain" Grid.Row="0" VerticalAlignment="Bottom" Visibility="Hidden">
+                <Ellipse x:Name="EllipseTryAgain" Width="120" Height="120" Fill="{StaticResource BackgroundGrayLight}"/>
+                <Viewbox Width="80" Height="80">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M12,4C15.64,4 18.67,6.59 19.35,10.04C21.95,10.22 24,12.36 24,15A5,5 0 0,1 19,20H6A6,6 0 0,1 0,14C0,10.91 2.34,8.36 5.35,8.04C6.6,5.64 9.11,4 12,4M7.5,9.69C6.06,11.5 6.2,14.06 7.82,15.68C8.66,16.5 9.81,17 11,17V18.86L13.83,16.04L11,13.21V15C10.34,15 9.7,14.74 9.23,14.27C8.39,13.43 8.26,12.11 8.92,11.12L7.5,9.69M9.17,8.97L10.62,10.42L12,11.79V10C12.66,10 13.3,10.26 13.77,10.73C14.61,11.57 14.74,12.89 14.08,13.88L15.5,15.31C16.94,13.5 16.8,10.94 15.18,9.32C14.34,8.5 13.19,8 12,8V6.14L9.17,8.97Z" Fill="{StaticResource BackgroundRedNormal}" />
+                    </Canvas>
+                </Viewbox>
+            </Grid>
+            <Grid x:Name="GridAlready" Grid.Row="0" VerticalAlignment="Bottom" Visibility="Hidden">
+                <Ellipse x:Name="EllipseAlready" Width="120" Height="120" Fill="{StaticResource BackgroundGrayLight}"/>
+                <Viewbox Width="80" Height="80">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z" Fill="{StaticResource BackgroundGreenNormal}" />
+                    </Canvas>
+                </Viewbox>
+            </Grid>
+            <Label x:Name="LabelState" Grid.Row="1" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Waiting for server response..." FontFamily="{StaticResource SegoeUI}" FontWeight="Light" FontSize="16" Foreground="Black" RenderTransformOrigin="0.5,0.5">
+            	<Label.RenderTransform>
+            		<TransformGroup>
+            			<ScaleTransform/>
+            			<SkewTransform/>
+            			<RotateTransform/>
+            			<TranslateTransform/>
+            		</TransformGroup>
+            	</Label.RenderTransform>
+            </Label>
+            <Button x:Name="ButtonCancel" Grid.Row="2" Width="200" Height="40" Content="CANCEL" Style="{StaticResource ButtonRed}" FontFamily="{StaticResource SegoeUI}" FontWeight="Bold" FontSize="15" Foreground="White" Visibility="Visible" RenderTransformOrigin="0.5,0.5" Click="ButtonCancel_Click"></Button>
+            <Button x:Name="ButtonUpdate" Grid.Row="2" Width="200" Height="40" Content="UPDATE" Style="{StaticResource ButtonGreen}" FontFamily="{StaticResource SegoeUI}" FontWeight="Bold" FontSize="15" Foreground="White" Visibility="Hidden" Click="ButtonUpdate_Click"></Button>
+            <Button x:Name="ButtonTryAgain" Grid.Row="2" Width="200" Height="40" Content="TRY AGAIN" Style="{StaticResource ButtonRed}" FontFamily="{StaticResource SegoeUI}" FontWeight="Bold" FontSize="15" Foreground="White" Visibility="Hidden" Click="ButtonTryAgain_Click"></Button>
+            <Button x:Name="ButtonClose" Grid.Row="2" Width="200" Height="40" Content="CLOSE" Style="{StaticResource ButtonRed}" FontFamily="{StaticResource SegoeUI}" FontWeight="Bold" FontSize="15" Foreground="White" Visibility="Hidden" Click="ButtonClose_Click"></Button>
+        </Grid>
+        <Grid x:Name="grid" Grid.Row="0" Background="{StaticResource BackgroundWhite}" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.Effect>
+                <DropShadowEffect Direction="270" Opacity="0.3" ShadowDepth="2"/>
+            </Grid.Effect>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Viewbox Width="60" Height="60" HorizontalAlignment="Right" Grid.Column="0">
+                <Canvas Width="24" Height="24">
+                    <Path Data="M21,10.12H14.22L16.96,7.3C14.23,4.6 9.81,4.5 7.08,7.2C4.35,9.91 4.35,14.28 7.08,17C9.81,19.7 14.23,19.7 16.96,17C18.32,15.65 19,14.08 19,12.1H21C21,14.08 20.12,16.65 18.36,18.39C14.85,21.87 9.15,21.87 5.64,18.39C2.14,14.92 2.11,9.28 5.62,5.81C9.13,2.34 14.76,2.34 18.27,5.81L21,3V10.12M12.5,8V12.25L16,14.33L15.28,15.54L11,13V8H12.5Z" Fill="{StaticResource BackgroundBlueNormal}" />
+                </Canvas>
+            </Viewbox>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="42"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Padding="0" Margin="10 0 0 0" VerticalAlignment="Bottom" Content="UPDATE" FontFamily="{StaticResource SegoeUI}" FontWeight="Light" FontSize="20" Foreground="Black"/>
+                <Label Grid.Row="1" Padding="0" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Check for updates" FontFamily="{StaticResource SegoeUI}" FontWeight="Light" FontSize="14" Foreground="Black"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
