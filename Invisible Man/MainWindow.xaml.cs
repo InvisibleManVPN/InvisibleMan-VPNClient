@@ -379,14 +379,6 @@ namespace Invisible_Man
             notifyIcon.Visible = false;
         }
 
-        protected override void OnStateChanged(EventArgs e)
-        {
-            if(WindowState == System.Windows.WindowState.Minimized)
-                this.Hide();
-
-            base.OnStateChanged(e);
-        }
-
         /// <summary>
         /// Show and hide disconnect, connecting and connected Grids by ConnectingState
         /// </summary>
@@ -488,13 +480,11 @@ namespace Invisible_Man
 
         private void OpenNotify(object sender, EventArgs e)
         {
-            this.Show();
             this.WindowState = System.Windows.WindowState.Normal;
         }
 
         private void UpdateNotify(object sender, EventArgs e)
         {
-            this.Show();
             this.WindowState = System.Windows.WindowState.Normal;
 
             // Close all other child windows
@@ -508,7 +498,6 @@ namespace Invisible_Man
 
         private void AboutNotify(object sender, EventArgs e)
         {
-            this.Show();
             this.WindowState = System.Windows.WindowState.Normal;
             
             // Close all other child windows
