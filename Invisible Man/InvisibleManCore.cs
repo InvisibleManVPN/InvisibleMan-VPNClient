@@ -33,7 +33,7 @@ namespace Invisible_Man
     class InvisibleManCore
     {
         // Initialize
-        public static int bundleIdentifier = 1;
+        public static int bundleIdentifier = 2;
         public static int index = 0;
         public static bool isSelectServer = false;
 
