@@ -222,6 +222,42 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:1.4" Value="360"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="AnimMessage">
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridMessage">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1">
+        			<EasingDoubleKeyFrame.EasingFunction>
+        				<PowerEase EasingMode="EaseOut"/>
+        			</EasingDoubleKeyFrame.EasingFunction>
+        		</EasingDoubleKeyFrame>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridMessage">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="-50"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
+        			<EasingDoubleKeyFrame.EasingFunction>
+        				<PowerEase EasingMode="EaseOut"/>
+        			</EasingDoubleKeyFrame.EasingFunction>
+        		</EasingDoubleKeyFrame>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="AnimMessageClose">
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridMessage">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
+        			<EasingDoubleKeyFrame.EasingFunction>
+        				<PowerEase EasingMode="EaseOut"/>
+        			</EasingDoubleKeyFrame.EasingFunction>
+        		</EasingDoubleKeyFrame>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridMessage">
+        		<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-50">
+        			<EasingDoubleKeyFrame.EasingFunction>
+        				<PowerEase EasingMode="EaseOut"/>
+        			</EasingDoubleKeyFrame.EasingFunction>
+        		</EasingDoubleKeyFrame>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
     <Window.Background>
         <StaticResource ResourceKey="BackgroundGrayVeryLight"/>
@@ -230,6 +266,8 @@
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard Storyboard="{StaticResource AnimStartup}"/>
             <BeginStoryboard Storyboard="{StaticResource AnimConnecting}"/>
+            <BeginStoryboard Storyboard="{StaticResource AnimMessage}"/>
+            <BeginStoryboard Storyboard="{StaticResource AnimMessageClose}"/>
         </EventTrigger>
     </Window.Triggers>
     <Grid>
@@ -247,6 +285,28 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
+                <Grid x:Name="GridMessage" Grid.Row="0" VerticalAlignment="Top" Height="40" Background="{StaticResource BackgroundGrayLight}" Visibility="Hidden" RenderTransformOrigin="0.5,0.5">
+                	<Grid.RenderTransform>
+                		<TransformGroup>
+                			<ScaleTransform/>
+                			<SkewTransform/>
+                			<RotateTransform/>
+                			<TranslateTransform/>
+                		</TransformGroup>
+                	</Grid.RenderTransform>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="35"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="LabelMessage" Grid.Column="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Message content" FontFamily="{StaticResource SegoeUI}" FontWeight="Normal" FontSize="13" Foreground="Black"></Label>
+                    <Viewbox x:Name="ButtonCloseMessage" Width="25" Height="25" HorizontalAlignment="Left" Grid.Column="1" Cursor="Hand" PreviewMouseDown="ButtonCloseMessage_PreviewMouseDown" >
+                        <Canvas Width="24" Height="24" Background="{StaticResource BackgroundGrayLight}">
+                            <Path Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" Fill="{StaticResource BackgroundRedDark}" />
+                        </Canvas>
+                    </Viewbox>
+                </Grid>
                 <Grid x:Name="GridStateLogoDisconnected" Grid.Row="0" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Visibility="Visible">
                     <Grid.RenderTransform>
                         <TransformGroup>

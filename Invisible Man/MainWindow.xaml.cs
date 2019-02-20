@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Windows.Threading;
 using System.Diagnostics;
+using System.Windows.Media.Animation;
 
 namespace Invisible_Man
 {
@@ -27,6 +28,7 @@ namespace Invisible_Man
         // BackgroundWorkers and Dispatchers to check connecting states
         private BackgroundWorker connectBackgroundWorker = new BackgroundWorker();
         private BackgroundWorker updateBackgroundWorker = new BackgroundWorker();
+        private BackgroundWorker messageBackgroundWorker = new BackgroundWorker();
         private DispatcherTimer connectDispatcherTimer = new DispatcherTimer();
         private DispatcherTimer disconnectDispatcherTimer = new DispatcherTimer();
         private DispatcherTimer cancelDispatcherTimer = new DispatcherTimer();
@@ -48,6 +50,7 @@ namespace Invisible_Man
             // Set BackgroundWorkers and Dispatchers
             connectBackgroundWorker.DoWork += connectBackgroundWorker_DoWork;
             updateBackgroundWorker.DoWork += updateBackgroundWorker_DoWork;
+            messageBackgroundWorker.DoWork += messageBackgroundWorker_DoWork;
             connectDispatcherTimer.Tick += connectDispatcherTimer_Tick;
             connectDispatcherTimer.Interval = TimeSpan.FromSeconds(1);
             disconnectDispatcherTimer.Tick += disconnectDispatcherTimer_Tick;
@@ -80,6 +83,9 @@ namespace Invisible_Man
 
             // Check for new version of Invisible Man
             updateBackgroundWorker.RunWorkerAsync();
+
+            // Check for message of Invisible Man
+            messageBackgroundWorker.RunWorkerAsync();
         }
 
         /// <summary>
@@ -213,6 +219,28 @@ namespace Invisible_Man
             {
                 if (result == "NewUpdate")
                     GridNewUpdate.Visibility = System.Windows.Visibility.Visible;
+            }));
+        }
+
+        /// <summary>
+        /// Check for message in messageBackgroundWorker
+        /// </summary>
+        private async void messageBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            InvisibleManCore invisibleManCore = new InvisibleManCore();
+            string message = await invisibleManCore.CheckForMessage();
+
+            await Dispatcher.BeginInvoke(new Action(delegate
+            {
+                if (message != "FailedToConnect")
+                {
+                    LabelMessage.Content = message;
+                    GridMessage.Visibility = System.Windows.Visibility.Visible;
+
+                    // Run the animation
+                    Storyboard messageStoryboard = this.TryFindResource("AnimMessage") as Storyboard;
+                    messageStoryboard.Begin();
+                }
             }));
         }
 
@@ -372,6 +400,12 @@ namespace Invisible_Man
                 InvisibleManCore.isSelectServer = false;
                 ChangeServer();
             }
+        }
+
+        private void ButtonCloseMessage_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Storyboard messageCloseStoryboard = this.TryFindResource("AnimMessageClose") as Storyboard;
+            messageCloseStoryboard.Begin();
         }
 
         private void Application_Closed(object sender, EventArgs e)
