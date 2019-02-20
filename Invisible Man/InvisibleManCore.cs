@@ -33,7 +33,7 @@ namespace Invisible_Man
     class InvisibleManCore
     {
         // Initialize
-        public static int bundleIdentifier = 2;
+        public static int bundleIdentifier = 3;
         public static int index = 0;
         public static bool isSelectServer = false;
 
@@ -280,6 +280,38 @@ namespace Invisible_Man
                     return "NewUpdate";
                 else
                     return "AlreadyHave";
+            }
+            catch(Exception)
+            {
+                return "FailedToConnect";
+            }
+        }
+
+        /// <summary>
+        /// Check the server to message
+        /// </summary>
+        public async Task<string> CheckForMessage()
+        {
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                var url = "https://invisiblemanvpn.github.io/index.html";
+                HttpClient httpClient = new HttpClient();
+                string html = await httpClient.GetStringAsync(url);
+
+                HtmlDocument htmlDocument = new HtmlDocument();
+                htmlDocument.LoadHtml(html);
+                List<HtmlNode> htmlNodeList = htmlDocument.DocumentNode.SelectNodes("//meta")
+                    .Where(node => node.GetAttributeValue("name", "")
+                    .Equals("Message")).ToList();
+                HtmlAttribute contentHtmlAttribute = htmlNodeList[0].Attributes["content"];
+
+                string[] message = contentHtmlAttribute.Value.Split('|');
+                int messageTime = Convert.ToInt32(message[0]);
+                string messageContent = message[1];
+
+                await Task.Delay(messageTime * 1000);
+                return messageContent;
             }
             catch(Exception)
             {
