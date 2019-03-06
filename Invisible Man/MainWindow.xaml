@@ -299,8 +299,10 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="35"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-
-                    <Label x:Name="LabelMessage" Grid.Column="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Message content" FontFamily="{StaticResource SegoeUI}" FontWeight="Normal" FontSize="13" Foreground="Black"></Label>
+                    
+                    <Grid x:Name="GridMessageContent" Grid.Column="0" Background="{StaticResource BackgroundGrayLight}" PreviewMouseDown="GridMessageContent_PreviewMouseDown">
+                        <Label x:Name="LabelMessage" Grid.Column="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Message content (Click here)" FontFamily="{StaticResource SegoeUI}" FontWeight="Normal" FontSize="13" Foreground="Black"></Label>
+                    </Grid>
                     <Viewbox x:Name="ButtonCloseMessage" Width="25" Height="25" HorizontalAlignment="Left" Grid.Column="1" Cursor="Hand" PreviewMouseDown="ButtonCloseMessage_PreviewMouseDown" >
                         <Canvas Width="24" Height="24" Background="{StaticResource BackgroundGrayLight}">
                             <Path Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" Fill="{StaticResource BackgroundRedDark}" />

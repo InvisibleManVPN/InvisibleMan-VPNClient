@@ -29,11 +29,23 @@ namespace Invisible_Man
             this.password = password;
         }
     }
+    
+    class Message
+    {
+        public string content { get; set; }
+        public string link { get; set; }
+
+        public Message(string content, string link)
+        {
+            this.content = content;
+            this.link = link;
+        }
+    }
 
     class InvisibleManCore
     {
         // Initialize
-        public static int bundleIdentifier = 3;
+        public static int bundleIdentifier = 4;
         public static int index = 0;
         public static bool isSelectServer = false;
 
@@ -290,12 +302,13 @@ namespace Invisible_Man
         /// <summary>
         /// Check the server to message
         /// </summary>
-        public async Task<string> CheckForMessage()
+        public async Task<Message> CheckForMessage()
         {
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                 var url = "https://invisiblemanvpn.github.io/index.html";
+
                 HttpClient httpClient = new HttpClient();
                 string html = await httpClient.GetStringAsync(url);
 
@@ -306,16 +319,21 @@ namespace Invisible_Man
                     .Equals("Message")).ToList();
                 HtmlAttribute contentHtmlAttribute = htmlNodeList[0].Attributes["content"];
 
-                string[] message = contentHtmlAttribute.Value.Split('|');
-                int messageTime = Convert.ToInt32(message[0]);
-                string messageContent = message[1];
+                string[] messageString = contentHtmlAttribute.Value.Split('|');
+                int messageTime = Convert.ToInt32(messageString[0]);
+                string messageContent = messageString[1];
+                string messageLink = null;
+                if (messageString.Length == 3)
+                    messageLink = messageString[2];
+
+                Message message = new Message(messageContent, messageLink);
 
                 await Task.Delay(messageTime * 1000);
-                return messageContent;
+                return message;
             }
             catch(Exception)
             {
-                return "FailedToConnect";
+                return new Message("FailedToConnect", null);
             }
         }
     }
