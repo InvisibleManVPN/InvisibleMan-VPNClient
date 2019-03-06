@@ -40,6 +40,9 @@ namespace Invisible_Man
         // Notify icon
         private System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
 
+        // Message link
+        private static string messageLink = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -228,13 +231,17 @@ namespace Invisible_Man
         private async void messageBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             InvisibleManCore invisibleManCore = new InvisibleManCore();
-            string message = await invisibleManCore.CheckForMessage();
+            Message message = await invisibleManCore.CheckForMessage();
 
             await Dispatcher.BeginInvoke(new Action(delegate
             {
-                if (message != "FailedToConnect")
+                if (message.content != "FailedToConnect")
                 {
-                    LabelMessage.Content = message;
+                    LabelMessage.Content = message.content;
+                    messageLink = message.link;
+                    if(!string.IsNullOrEmpty(messageLink))
+                        GridMessageContent.Cursor = Cursors.Hand;
+
                     GridMessage.Visibility = System.Windows.Visibility.Visible;
 
                     // Run the animation
@@ -566,6 +573,12 @@ namespace Invisible_Man
             {
                 // Do nothing!
             }
+        }
+
+        private void GridMessageContent_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(!string.IsNullOrEmpty(messageLink))
+                Process.Start(messageLink);
         }
     }
 }
