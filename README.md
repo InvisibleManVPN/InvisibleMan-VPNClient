@@ -2,6 +2,8 @@
 
 > Free premium PPTP VPN
 
+[![Downloads](https://img.shields.io/github/downloads/invisiblemanvpn/InvisibleMan-VPNClient/total.svg?label=downloads%20%28total%29)](https://github.com/InvisibleManVPN/InvisibleMan-VPNClient/releases)
+
 Invisible Man is an open source, censorship and circumvention tool to give access to the open Internet and past censors. Invisible Man is built on C# WPF.
 
 ![InvisibleManScreenShot1](https://github.com/InvisibleManVPN/InvisibleMan-VPNClient/blob/master/Images/ImgInvisibleMan1.png)
